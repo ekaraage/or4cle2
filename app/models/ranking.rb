@@ -2,6 +2,7 @@
 
 class Ranking < ApplicationRecord
   belongs_to :user
+  has_many :songs, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 80 }
   validates :start_date, presence: true

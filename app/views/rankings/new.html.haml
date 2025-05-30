@@ -1,0 +1,18 @@
+%main.form-signin.col-9.mx-auto
+  = form_with(model: @ranking, method: :post) do |f|
+    %h4.my-2.fw-normal
+      ランキングの情報を入力してください。
+    %div.form-floating
+      = f.text_field :name, class: "form-control", required: true, id: "name", maxlength: 80
+      %label{for: "name"} ランキング名(80文字以内で入力してください)
+    %div.form-floating
+      = f.text_area :detail, class: "form-control", id: "detail" ,size: "40x10", maxlength: 400
+      %label{for: "detail"} ランキング詳細(400文字以内で入力してください)
+    %div.form-floating
+      = f.datetime_field :start_date, class: "form-control", required: true, id: "start_date"
+      %label{for: "start_date"} 開始日時
+    %div.form-floating
+      = f.datetime_field :end_date, class: "form-control", required: true, id: "end_date"
+      %label{for: "end_date"} 終了日時
+    
+    = f.submit "登録する", class: "btn btn-lg btn-primary w-100 mt-2"

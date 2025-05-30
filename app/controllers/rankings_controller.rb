@@ -16,7 +16,7 @@ class RankingsController < ApplicationController
   def create
     @ranking = Ranking.new(ranking_params)
     if @ranking.save
-      redirect_to @ranking, notice: 'ランキング:{@ranking.name}は正常に作成されました。'
+      redirect_to @ranking, notice: "ランキング: #{@ranking.name} は正常に作成されました。"
     else
       render :new
     end
@@ -26,15 +26,16 @@ class RankingsController < ApplicationController
 
   def update
     if @ranking.update(ranking_params)
-      redirect_to @ranking, notice: 'ランキング:{@ranking.name}は正常に更新されました。'
+      redirect_to @ranking, notice: "ランキング: #{@ranking.name} は正常に更新されました。"
     else
       render :edit
     end
   end
 
   def destroy
+    ranking_title = @ranking.name
     @ranking.destroy
-    redirect_to rankings_path, notice: 'Ranking was successfully deleted.'
+    redirect_to rankings_path, notice: "ランキング: #{ranking_title} は正常に削除されました。"
   end
 
   private

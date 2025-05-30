@@ -1,9 +1,9 @@
-%div.dgrid.gap-2.col-9.mx-auto
-  %button.btn.btn-primary.my-2{:type => "button", :onclick => "location.href='#{ new_ranking_path }'"}
+.dgrid.gap-2.col-9.mx-auto
+  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'" }
     + 新しいIRを作成する
 
-%div.container
-  %div.table-responsive
+.container
+  .table-responsive
     %table.table
       %thead
         %tr
@@ -16,6 +16,6 @@
         - @rankings.each do |ranking|
           %tr
             %td= link_to ranking.name, ranking_path(ranking)
-            %td= ranking.created_at.strftime("%Y/%m/%d %H:%M")
-            %td= link_to "編集", edit_ranking_path(ranking)
-            %td= link_to "削除", ranking_path(ranking)
+            %td= ranking.created_at.strftime('%Y/%m/%d %H:%M')
+            %td= link_to '編集', edit_ranking_path(ranking)
+            %td= link_to '削除', ranking_path(ranking)

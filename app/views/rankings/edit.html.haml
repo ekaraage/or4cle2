@@ -2,17 +2,17 @@
   = form_with(model: @ranking, method: :put) do |f|
     %h4.my-2.fw-normal
       ランキングの情報を入力してください。
-    %div.form-floating
-      = f.text_field :title, class: "form-control", required: true, id: "title", maxlength: 80, placeholder: @ranking.title
-      %label{for: "title"} ランキング名(80文字以内で入力してください)
-    %div.form-floating
-      = f.text_area :detail, class: "form-control", id: "detail" ,size: "40x10", maxlength: 400, placeholder: @ranking.detail
-      %label{for: "detail"} ランキング詳細(400文字以内で入力してください)
-    %div.form-floating
-      = f.datetime_field :start_date, class: "form-control", required: true, id: "start_date", placeholder: @ranking.start_date.strftime("%Y/%m/%d %H:%M")
-      %label{for: "start_date"} 開始日時
-    %div.form-floating
-      = f.datetime_field :end_date, class: "form-control", required: true, id: "end_date", placeholder: @ranking.end_date.strftime("%Y/%m/%d %H:%M")
-      %label{for: "end_date"} 終了日時
-    
-    = f.submit "編集する", class: "btn btn-lg btn-primary w-100 mt-2"
+    .form-floating
+      = f.text_field :title, class: 'form-control', required: true, id: 'title', maxlength: 80, placeholder: @ranking.title
+      %label{ for: 'title' } ランキング名(80文字以内で入力してください)
+    .form-floating
+      = f.text_area :detail, class: 'form-control', id: 'detail', size: '40x10', maxlength: 400, placeholder: @ranking.detail
+      %label{ for: 'detail' } ランキング詳細(400文字以内で入力してください)
+    .form-floating
+      = f.datetime_field :start_date, class: 'form-control', required: true, id: 'start_date', placeholder: @ranking.start_date.strftime('%Y/%m/%d %H:%M')
+      %label{ for: 'start_date' } 開始日時
+    .form-floating
+      = f.datetime_field :end_date, class: 'form-control', required: true, id: 'end_date', placeholder: @ranking.end_date.strftime('%Y/%m/%d %H:%M')
+      %label{ for: 'end_date' } 終了日時
+
+    = f.submit '編集する', class: 'btn btn-lg btn-primary w-100 mt-2'

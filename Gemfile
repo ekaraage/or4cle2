@@ -40,8 +40,10 @@ gem 'kamal', require: false
 gem 'thruster', require: false
 
 gem 'erb2haml'
-gem 'haml-rails'
 gem 'haml-lint'
+gem 'haml-rails'
+
+gem 'devise'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_30_083652) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_30_150730) do
   create_table "rankings", force: :cascade do |t|
     t.string "title", null: false
     t.time "start_date", null: false
@@ -47,6 +47,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_30_083652) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
   add_foreign_key "rankings", "users"

@@ -3,8 +3,8 @@
     %h4.my-2.fw-normal
       ランキングの情報を入力してください。
     %div.form-floating
-      = f.text_field :name, class: "form-control", required: true, id: "name", maxlength: 80, placeholder: @ranking.name
-      %label{for: "name"} ランキング名(80文字以内で入力してください)
+      = f.text_field :title, class: "form-control", required: true, id: "title", maxlength: 80, placeholder: @ranking.title
+      %label{for: "title"} ランキング名(80文字以内で入力してください)
     %div.form-floating
       = f.text_area :detail, class: "form-control", id: "detail" ,size: "40x10", maxlength: 400, placeholder: @ranking.detail
       %label{for: "detail"} ランキング詳細(400文字以内で入力してください)

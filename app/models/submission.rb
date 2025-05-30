@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Submission < ApplicationRecord
-  belongs_to :song, :user
+  belongs_to :song
   belongs_to :user
 
   validates :user, presence: true

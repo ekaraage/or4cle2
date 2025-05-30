@@ -14,7 +14,7 @@
             %a.nav-link.text-white{ href: '/release_notes/' } Release Note
           - if user_signed_in?
             %li
-              = link_to "#{current_user.name}", edit_user_registration_path, class: 'nav-link text-white' 
+              = link_to current_user.name.to_s, edit_user_registration_path, class: 'nav-link text-white'
             %li
               = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link text-white'
           - else

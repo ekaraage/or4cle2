@@ -2,35 +2,26 @@
   Edit #{resource_name.to_s.humanize}
 = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
   = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
+  .form-floating
+    = f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', required: true, id: 'name', maxlength: 30
+    %label{ for: 'name' } ID (30文字以内で入力してください。)
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
     %div
       Currently waiting confirmation for: #{resource.unconfirmed_email}
-  .field
-    = f.label :password
-    %i (leave blank if you don't want to change it)
-    %br/
-    = f.password_field :password, autocomplete: "new-password"
-    - if @minimum_password_length
-      %br/
-      %em
-        = @minimum_password_length
-        characters minimum
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .field
-    = f.label :current_password
-    %i (we need your current password to confirm your changes)
-    %br/
-    = f.password_field :current_password, autocomplete: "current-password"
+  .form-floating
+    %i (パスワードを変更しない場合は、このフィールドを空のままにしてください。)
+    = f.password_field :password, autocomplete: "new-password", class: 'form-control', required: true, id: 'new-password', maxlength: 128
+    %label{ for: 'new-password' } 新しいパスワード (8文字以上128文字以下で、英字の大文字小文字、数字、記号をいずれも含む必要があります。)
+  .form-floating
+    = f.password_field :password_confirmation, autocomplete: "current-password", class: 'form-control', required: true, id: 'password-confirmation', maxlength: 128
+    %label{ for: 'password-confirmation' } 新しいパスワードの確認
+  .form-floating
+    %i (変更を保存するためには、現在のパスワードを入力する必要があります。)
+    = f.password_field :password, autocomplete: "current-password", class: 'form-control', required: true, id: 'current-password', maxlength: 128
+    %label{ for: 'current-password' } 現在のパスワード
   .actions
     = f.submit "Update"
-%h3 Cancel my account
+%h3 アカウントを削除する
 %div
-  Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete}
-= link_to "Back", :back
+  #{button_to "削除", registration_path(resource_name), data: { confirm: "本当にアカウントを削除しますか？", turbo_confirm: "本当にアカウントを削除しますか？" }, method: :delete}
+= link_to "戻る", :back

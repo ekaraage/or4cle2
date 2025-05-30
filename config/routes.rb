@@ -19,6 +19,5 @@ Rails.application.routes.draw do
       resources :submissions
     end
   end
-  resources :users
   root 'home#index'
 end

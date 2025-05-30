@@ -1,0 +1,15 @@
+%h2 Log in
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  .form-floating
+    = f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', required: true, id: 'name', maxlength: 30
+    %label{ for: 'name' } ID (30文字以内で入力してください。)
+  .form-floating
+    = f.password_field :password, autocomplete: "current-password", class: 'form-control', required: true, id: 'password', maxlength: 128
+    %label{ for: 'password' } パスワード (8文字以上128文字以下で、英字の大文字小文字、数字、記号をいずれも含む必要があります。)
+  - if devise_mapping.rememberable?
+    .field
+      = f.check_box :remember_me
+      = f.label :remember_me
+  .actions
+    = f.submit "Log in"
+= render "devise/shared/links"

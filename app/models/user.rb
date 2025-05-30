@@ -7,5 +7,5 @@ class User < ApplicationRecord
          :rememberable, :validatable, :timeoutable, authentication_keys: [:name]
 
   validates :name, uniqueness: true, presence: true, length: { maximum: 30 }
-  validate :password, complex_password: true
+  validates :password, complex_password: true
 end

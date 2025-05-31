@@ -40,7 +40,7 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    ret = params.require(:submission).permit(:screen_name, :score, :comment, :song_id, :user_id)
+    ret = params.require(:submission).permit(:screen_name, :score, :comment)
     ret.merge(user: current_user)
   end
 

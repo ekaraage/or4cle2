@@ -13,7 +13,7 @@ class RankingsController < ApplicationController
   def create
     @ranking = current_user.rankings.new(ranking_params)
     if @ranking.save
-      redirect_to @ranking, notice: "ランキング: #{@ranking.title} は正常に作成されました。"
+      redirect_to ranking_songs_path(@ranking), notice: "ランキング: #{@ranking.title} は正常に作成されました。"
     else
       render :new
     end
@@ -23,7 +23,7 @@ class RankingsController < ApplicationController
 
   def update
     if @ranking.update(ranking_params)
-      redirect_to @ranking, notice: "ランキング: #{@ranking.title} は正常に更新されました。"
+      redirect_to rankings_path, notice: "ランキング: #{@ranking.title} は正常に更新されました。"
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class RankingsController < ApplicationController
   private
 
   def ranking_params
-    params.require(:ranking).permit(:title, :detail, :start_date, :end_date, :user_id)
+    params.require(:ranking).permit(:title, :detail, :start_date, :end_date)
   end
 
   def set_ranking

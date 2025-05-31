@@ -15,7 +15,7 @@ class SongsController < ApplicationController
   def create
     @song = @ranking.songs.new(song_params)
     if @song.save
-      redirect_to ranking_song_path(@ranking, @song), notice: "曲: #{@song.title} は正常に追加されました。"
+      redirect_to ranking_songs_path(@ranking), notice: "曲: #{@song.title} は正常に追加されました。"
     else
       render :new
     end
@@ -40,7 +40,7 @@ class SongsController < ApplicationController
   private
 
   def song_params
-    params.require(:song).permit(:title, :model, :ranking_id)
+    params.require(:song).permit(:title, :model)
   end
 
   def set_song

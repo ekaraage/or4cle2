@@ -15,7 +15,7 @@
       %tbody
         - @rankings.each do |ranking|
           %tr
-            %td= link_to ranking.name, ranking_path(ranking)
+            %td= link_to ranking.title, ranking_path(ranking)
             %td= ranking.created_at.strftime('%Y/%m/%d %H:%M')
             %td= link_to '編集', edit_ranking_path(ranking)
-            %td= link_to '削除', ranking_path(ranking)
+            %td= link_to '削除', ranking_path(ranking), data: { turbo_method: :delete, turbo_confirm: "#{ranking.title}を本当に削除しますか？" }

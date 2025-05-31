@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RankingsController < ApplicationController
-  before_action :set_ranking, only: %i[show edit update destroy]
+  before_action :set_ranking, only: %i[show]
 
   def index
     @rankings = Ranking.all
@@ -10,11 +10,11 @@ class RankingsController < ApplicationController
   def show; end
 
   def new
-    @ranking = Ranking.new
+    @ranking = current_user.rankings.build
   end
 
   def create
-    @ranking = Ranking.new(ranking_params)
+    @ranking = current_user.rankings.new(ranking_params)
     if @ranking.save
       redirect_to @ranking, notice: "ランキング: #{@ranking.title} は正常に作成されました。"
     else
@@ -22,9 +22,12 @@ class RankingsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @ranking = current_user.rankings.find(params[:id])
+  end
 
   def update
+    @ranking = current_user.rankings.find(params[:id])
     if @ranking.update(ranking_params)
       redirect_to @ranking, notice: "ランキング: #{@ranking.title} は正常に更新されました。"
     else
@@ -33,6 +36,7 @@ class RankingsController < ApplicationController
   end
 
   def destroy
+    @ranking = current_user.rankings.find(params[:id])
     ranking_title = @ranking.title
     @ranking.destroy
     redirect_to rankings_path, notice: "ランキング: #{ranking_title} は正常に削除されました。"

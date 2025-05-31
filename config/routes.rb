@@ -14,9 +14,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  get '/rankings/:id', to: redirect('rankings/%{id}/songs') # rubocop:disable Style/FormatStringToken
+  # get '/rankings/:id', to: redirect('rankings/%{id}/songs')
   resources :rankings, except: [:show] do
-    get '/songs/:id', to: redirect('rankings/%{ranking_id}/songs/%{id}/submissions') # rubocop:disable Style/FormatStringToken
+    # get '/songs/:id', to: redirect('rankings/%{ranking_id}/songs/%{id}/submissions')
     resources :songs, except: [:show] do
       resources :submissions
     end

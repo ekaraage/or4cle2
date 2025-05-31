@@ -9,4 +9,12 @@ class Ranking < ApplicationRecord
   validates :end_date, presence: true
   # ここの400文字もマジ適当
   validates :detail, length: { maximum: 400 }
+
+  def formatted_date
+    "#{start_date.strftime('%Y/%m/%d %H:%M')} ~ #{end_date.strftime('%Y/%m/%d %H:%M')}"
+  end
+
+  def active?
+    Time.current.between?(start_date, end_date)
+  end
 end

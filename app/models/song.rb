@@ -2,6 +2,7 @@
 
 class Song < ApplicationRecord
   belongs_to :ranking
+  has_many :submissions, dependent: :destroy
 
   validates :ranking, presence: true
   validates :title, presence: true

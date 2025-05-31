@@ -11,6 +11,9 @@
   %h4 開始日時: #{@ranking.start_date.strftime('%Y/%m/%d %H:%M')}
   %h4 終了日時: #{@ranking.end_date.strftime('%Y/%m/%d %H:%M')}
 
+  - if @ranking.detail.present?
+    %p= @ranking.detail
+
 .dgrid.gap-2.col-9.mx-auto
   %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_path(@ranking)}'" }
     + 新しい曲を追加する
@@ -26,10 +29,9 @@
           %th 削除
 
       %tbody
-        - if @ranking.songs.present?
-          - @ranking.songs.each do |song|
-            %tr
-              %td= song.model
-              %td= link_to song.name.to_s, ranking_song_path(song)
-              %td= link_to '編集', edit_ranking_song_path(song)
-              %td= link_to '削除', ranking_song_path(song), data: { turbo_method: :delete, turbo_confirm: "#{song.title}を本当に削除しますか？" }
+        - @songs.each do |song|
+          %tr
+            %td= song.model
+            %td= link_to song.title, ranking_song_path(@ranking, song)
+            %td= link_to '編集', edit_ranking_song_path(@ranking, song)
+            %td= link_to '削除', ranking_song_path(@ranking, song), data: { turbo_method: :delete, turbo_confirm: "#{song.title}を本当に削除しますか？" }

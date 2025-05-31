@@ -2,7 +2,7 @@
   %nav{ aria: { label: 'breadcrumb' } }
     %ol.breadcrumb
       %li.breadcrumb-item
-        = link_to 'ランキング一覧', rankings_path
+        = link_to '曲一覧', ranking_songs_path(@rankig, @song)
       %li.breadcrumb-item.active{ aria: { current: 'page' } }
         = @ranking.title
 
@@ -20,7 +20,7 @@
     %table.table
       %thead
         %tr
-          %th 機種名
+          %th
           %th 曲名
           %th 編集
           %th 削除

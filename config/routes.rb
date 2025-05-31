@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :rankings, except: [:show] do
     get '/songs/:id', to: redirect('rankings/%{ranking_id}/songs/%{id}/submissions') # rubocop:disable Style/FormatStringToken
     resources :songs, except: [:show] do
-      resources :submissions, except: [:show]
+      resources :submissions
     end
   end
   root 'home#index'

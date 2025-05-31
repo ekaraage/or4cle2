@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 class SubmissionsController < ApplicationController
+  require 'image_processing/vips'
+
   before_action :set_ranking
   before_action :set_song
-  before_action :set_submission, only: %i[edit update destroy]
+  before_action :set_submission, only: %i[show edit update destroy]
 
   def index
     @submissions = @song.submissions
   end
+
+  def show; end
 
   def new
     @submission = @song.submissions.build(user: current_user)
@@ -40,8 +44,22 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    ret = params.require(:submission).permit(:screen_name, :score, :comment)
+    ret = params.require(:submission).permit(:screen_name, :score, :comment, :image)
+
+    if ret[:image].present? && ret[:image].respond_to?(:tempfile)
+      resized_picture = image_resize(ret[:image].tempfile)
+      ret[:image].tempfile = resized_picture if resized_picture.present?
+    end
+
     ret.merge(user: current_user)
+  end
+
+  def image_resize(image)
+    ImageProcessing::Vips
+      .source(image)
+      .resize_to_limit(1280, 1280)
+      .convert('jpg')
+      .call
   end
 
   def set_song

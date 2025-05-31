@@ -32,7 +32,7 @@
         - @submissions.each do |submission|
           %tr
             %td= submission.screen_name
-            %td= submission.score
+            %td= link_to submission.score.to_s, ranking_song_submission_path(@ranking, @song, submission)
             %td= submission.comment
             %td= link_to '編集', edit_ranking_song_submission_path(@ranking, @song, submission)
             %td= link_to '削除', ranking_song_submission_path(@ranking, @song, submission), data: { turbo_method: :delete, turbo_confirm: "#{@song.title}への提出を本当に削除しますか？" }

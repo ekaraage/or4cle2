@@ -16,7 +16,7 @@
             %li
               = link_to current_user.name.to_s, edit_user_registration_path, class: 'nav-link text-white'
             %li
-              = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link text-white'
+              = link_to 'Sign out', destroy_user_session_path, method: :delete, data:{ turbo_method: :delete }, class: 'nav-link text-white'
           - else
             %li
               = link_to 'Sign in', new_user_session_path, class: 'nav-link text-white'

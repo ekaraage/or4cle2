@@ -22,4 +22,6 @@ Rails.application.routes.draw do
     end
   end
   root 'home#index'
+  get 'faqs', to: 'home#faqs'
+  get 'release_notes', to: 'home#release_notes'
 end

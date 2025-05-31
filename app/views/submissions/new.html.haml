@@ -1,0 +1,15 @@
+%main.form-signin.col-9.mx-auto
+  = form_with(model: [@ranking, @song, @submission], method: :post) do |f|
+    %h4.my-2.fw-normal
+      提出の情報を入力してください。
+    .form-floating
+      = f.text_field :screen_name, class: 'form-control', required: true, id: 'title', maxlength: 20
+      %label{ for: 'title' } 表示名(20文字以内で入力してください)
+    .form-floating
+      = f.number_field :score, class: 'form-control', required: true, id: 'score', min: 0
+      %label{ for: 'score' } スコア(0以上の整数で入力してください)
+    .form-floating
+      = f.text_field :comment, class: 'form-control', id: 'comment', maxlength: 140
+      %label{ for: 'comment' } コメント(140文字以内で入力してください)
+
+    = f.submit '提出する', class: 'btn btn-lg btn-primary w-100 mt-2'

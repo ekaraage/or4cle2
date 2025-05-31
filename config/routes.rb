@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   # get '/rankings/:id', to: redirect('rankings/%{id}/songs')
   resources :rankings, except: [:show] do
-    resources :songs, expect: [:show] do
-      resources :submissions
+    resources :songs, except: [:show] do
+      resources :submissions, except: [:show]
     end
   end
   root 'home#index'

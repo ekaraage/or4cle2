@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 class SubmissionsController < ApplicationController
-  before_action :set_song, only: %i[index new create edit update destroy]
-  before_action :set_ranking, only: %i[index new create edit update destroy]
-  before_action :set_submission, only: %i[show edit update destroy]
+  before_action :set_ranking
+  before_action :set_song
+  before_action :set_submission, only: %i[edit update destroy]
 
   def index
     @submissions = @song.submissions
   end
-
-  # def show; end
 
   def new
     @submission = @song.submissions.build(user: current_user)
@@ -17,8 +15,6 @@ class SubmissionsController < ApplicationController
 
   def create
     @submission = @song.submissions.new(submission_params)
-    @submission.user = current_user
-
     if @submission.save
       redirect_to ranking_song_submissions_path(@ranking, @song), notice: "曲: #{@song.title} への提出は正常に保存されました。"
     else
@@ -26,12 +22,9 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  def edit
-    @submission = @song.submissions.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @submission = @song.submissions.find(params[:id])
     if @submission.update(submission_params)
       redirect_to ranking_song_submissions_path(@ranking, @song), notice: "曲: #{@song.title} への提出は正常に更新されました。"
     else
@@ -40,7 +33,6 @@ class SubmissionsController < ApplicationController
   end
 
   def destroy
-    @submission = @song.submissions.find(params[:id])
     @submission.destroy
     redirect_to ranking_song_submissions_path(@ranking, @song), notice: "曲: #{@song_title} への提出は正常に削除されました。"
   end
@@ -53,7 +45,7 @@ class SubmissionsController < ApplicationController
   end
 
   def set_song
-    @song = Song.find(params[:song_id])
+    @song = @ranking.songs.find(params[:song_id])
   end
 
   def set_ranking
@@ -61,6 +53,6 @@ class SubmissionsController < ApplicationController
   end
 
   def set_submission
-    @submission = Submission.find(params[:id])
+    @submission = @song.submissions.find(params[:id])
   end
 end

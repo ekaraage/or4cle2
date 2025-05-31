@@ -13,7 +13,8 @@ class RankingsController < ApplicationController
   def create
     @ranking = current_user.rankings.new(ranking_params)
     if @ranking.save
-      redirect_to ranking_songs_path(@ranking), notice: "ランキング: #{@ranking.title} は正常に作成されました。"
+      flash[:success] = "ランキング: #{@ranking.title} は正常に作成されました。"
+      redirect_to ranking_songs_path(@ranking)
     else
       render :new
     end
@@ -23,7 +24,8 @@ class RankingsController < ApplicationController
 
   def update
     if @ranking.update(ranking_params)
-      redirect_to rankings_path, notice: "ランキング: #{@ranking.title} は正常に更新されました。"
+      flash[:success] = "ランキング: #{@ranking.title} は正常に更新されました。"
+      redirect_to rankings_path
     else
       render :edit
     end
@@ -32,7 +34,8 @@ class RankingsController < ApplicationController
   def destroy
     ranking_title = @ranking.title
     @ranking.destroy
-    redirect_to rankings_path, notice: "ランキング: #{ranking_title} は正常に削除されました。"
+    flash[:success] = "ランキング: #{ranking_title} は正常に削除されました。"
+    redirect_to rankings_path
   end
 
   private

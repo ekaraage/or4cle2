@@ -5,8 +5,10 @@
         = link_to 'ランキング一覧', rankings_path
       %li.breadcrumb-item
         = link_to @ranking.title, ranking_songs_path(@ranking)
+      %li.breadcrumb-item
+        = link_to @song.title, ranking_song_submissions_path(@ranking, @song)
       %li.breadcrumb-item.active{ aria: { current: 'page' } }
-        = @song.title
+        = @submission.screen_name + 'さんの提出'
 
 .text-center.my-2
   %h1= @ranking.title

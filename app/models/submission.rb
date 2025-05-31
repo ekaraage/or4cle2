@@ -27,4 +27,8 @@ class Submission < ApplicationRecord
       errors.add(:image, '画像のサイズは2MB以下でなければなりません。')
     end
   end
+
+  def submitted_by?(user)
+    self.user == user
+  end
 end

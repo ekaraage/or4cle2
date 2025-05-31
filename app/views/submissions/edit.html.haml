@@ -9,8 +9,8 @@
       = f.number_field :score, class: 'form-control', required: true, id: 'score', min: 0, placeholder: @submission.score
       %label{ for: 'score' } スコア(0以上の整数で入力してください)
     .form-floating
-      = f.file_field :image, class: 'form-control', id: 'image', required: true, placeholder: @submission.image
-      %label{ for: 'image' } 画像(必須、JPEG, PNG, GIF形式でアップロードしてください。変更がない場合はそのままにしてください)
+      = f.file_field :image, class: 'form-control', id: 'image'
+      %label{ for: 'image' } 画像(必須、JPEG, PNG, GIF形式でアップロードしてください。変更のない場合はそのままにしてください。)
     .form-floating
       = f.text_area :comment, class: 'form-control', id: 'comment', maxlength: 140, placeholder: @submission.comment
       %label{ for: 'comment' } コメント(140文字以内で入力してください)

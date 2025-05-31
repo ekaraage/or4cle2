@@ -1,6 +1,11 @@
 .dgrid.gap-2.col-9.mx-auto
-  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'" }
-    + 新しいIRを作成する
+  - if user_signed_in?
+    %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'" }
+      + 新しいIRを作成する
+  - else
+    %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'", disabled: true }
+      + 新しいIRを作成する
+
 
 .container
   .table-responsive
@@ -17,5 +22,9 @@
           %tr
             %td= link_to ranking.title, ranking_songs_path(ranking)
             %td= ranking.formatted_date
-            %td= link_to '編集', edit_ranking_path(ranking)
-            %td= link_to '削除', ranking_path(ranking), data: { turbo_method: :delete, turbo_confirm: "#{ranking.title}を本当に削除しますか？" }
+            - if ranking.made_by?(current_user)
+              %td= link_to '編集', edit_ranking_path(ranking)
+              %td= link_to '削除', ranking_path(ranking), data: { turbo_method: :delete, turbo_confirm: "#{ranking.title}を本当に削除しますか？" }
+            - else
+              %td
+              %td

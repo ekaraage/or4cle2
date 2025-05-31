@@ -12,10 +12,17 @@
   %h1= @ranking.title
   %h4= @song.model
   %h4= @song.title
-
-.dgrid.gap-2.col-9.mx-auto
-  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'" }
-    + 新しい提出を追加する
+- if user_signed_in? && @ranking.active?
+  .dgrid.gap-2.col-9.mx-auto
+    %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'" }
+      + 新しい提出を追加する
+- else
+  - if !@ranking.active?
+    %h4.text-center
+      = @ranking.title + 'は終了しました。'
+  .dgrid.gap-2.col-9.mx-auto
+    %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'", disabled: true }
+      + 新しい提出を追加する
 
 .container
   .table-responsive
@@ -34,5 +41,9 @@
             %td= submission.screen_name
             %td= link_to submission.score.to_s, ranking_song_submission_path(@ranking, @song, submission)
             %td= submission.comment
-            %td= link_to '編集', edit_ranking_song_submission_path(@ranking, @song, submission)
-            %td= link_to '削除', ranking_song_submission_path(@ranking, @song, submission), data: { turbo_method: :delete, turbo_confirm: "#{@song.title}への提出を本当に削除しますか？" }
+            - if submission.submitted_by?(current_user)
+              %td= link_to '編集', edit_ranking_song_submission_path(@ranking, @song, submission)
+              %td= link_to '削除', ranking_song_submission_path(@ranking, @song, submission), data: { turbo_method: :delete, turbo_confirm: "#{@song.title}への提出を本当に削除しますか？" }
+            - else
+              %td
+              %td

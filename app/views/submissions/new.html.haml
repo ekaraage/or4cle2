@@ -3,7 +3,7 @@
     %h4.my-2.fw-normal
       提出の情報を入力してください。
     .form-floating
-      = f.text_field :screen_name, class: 'form-control', required: true, id: 'title', maxlength: 20
+      = f.text_field :screen_name, class: 'form-control', required: true, id: 'title', placeholder: "#{current_user.name}", maxlength: 20
       %label{ for: 'title' } 表示名(20文字以内で入力してください)
     .form-floating
       = f.number_field :score, class: 'form-control', required: true, id: 'score', min: 0

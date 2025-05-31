@@ -15,7 +15,8 @@ class SongsController < ApplicationController
   def create
     @song = @ranking.songs.new(song_params)
     if @song.save
-      redirect_to ranking_songs_path(@ranking), notice: "曲: #{@song.title} は正常に追加されました。"
+      flash[:success] = "曲: #{@song.title} は正常に追加されました。"
+      redirect_to ranking_songs_path(@ranking)
     else
       render :new
     end
@@ -25,7 +26,8 @@ class SongsController < ApplicationController
 
   def update
     if @song.update(song_params)
-      redirect_to ranking_songs_path(@ranking), notice: "曲: #{@song.title} は正常に更新されました。"
+      flash[:success] = "曲: #{@song.title} は正常に更新されました。"
+      redirect_to ranking_songs_path(@ranking)
     else
       render :edit
     end
@@ -34,7 +36,8 @@ class SongsController < ApplicationController
   def destroy
     song_title = @song.title
     @song.destroy
-    redirect_to ranking_songs_path, notice: "曲: #{song_title} は正常に削除されました。"
+    flash[:success] = "曲: #{song_title} は正常に削除されました。"
+    redirect_to ranking_songs_path
   end
 
   private

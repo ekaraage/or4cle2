@@ -1,0 +1,5 @@
+- flash.each do |type, message|
+  - next if message.blank?
+  %div{ class: "alert alert-#{type} alert-dismissible fade show", role: 'alert' }
+    = message
+    %button{ class: 'btn-close', data: { bs_dismiss: 'alert' }, type: 'button' }

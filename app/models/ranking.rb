@@ -17,4 +17,8 @@ class Ranking < ApplicationRecord
   def active?
     Time.current.between?(start_date, end_date)
   end
+
+  def made_by?(user)
+    self.user == user
+  end
 end

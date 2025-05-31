@@ -19,7 +19,7 @@
 - else
   - if !@ranking.active?
     %h4.text-center
-      = @ranking.title + 'は終了しました。'
+      #{@ranking.title} は終了しました。
   .dgrid.gap-2.col-9.mx-auto
     %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'", disabled: true }
       + 新しい提出を追加する

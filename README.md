@@ -82,6 +82,11 @@ docker compose up
 docker compose up -d
 ```
 
+debug.gem 等のデバッガを使用したい場合：
+```
+docker compose up -d && docker attach or4cle2-dev
+```
+
 **【停止】**
 ```
 docker compose down

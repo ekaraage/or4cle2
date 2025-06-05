@@ -1,10 +1,6 @@
 .dgrid.gap-2.col-9.mx-auto
-  - if user_signed_in?
-    %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'" }
-      + 新しいIRを作成する
-  - else
-    %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'", disabled: true }
-      + 新しいIRを作成する
+  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_path}'", class: ('disabled' if !user_signed_in?) }
+    + 新しいIRを作成する
 
 
 .container

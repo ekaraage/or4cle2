@@ -13,7 +13,7 @@
   %h4= @song.model
   %h4= @song.title
 
-- can_newly_submit = current_user&.can_submit_score?(@song)
+- can_submit = current_user&.can_submit_score?(@song)
 
 - if !@ranking.active?
   %h4.text-center

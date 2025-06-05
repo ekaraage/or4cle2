@@ -13,4 +13,8 @@ class Song < ApplicationRecord
   def added_by?(user)
     ranking.user == user
   end
+
+  def active?
+    ranking.active?
+  end
 end

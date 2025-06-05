@@ -23,4 +23,12 @@ class User < ApplicationRecord
   def will_save_change_to_email?
     false
   end
+
+  def can_edit_ranking_or_song?(model)
+    model.active? && model.made_by?(self)
+  end
+
+  def can_submit_score?(song)
+    song.active? && song.submissions.find_by(user: self).nil?
+  end
 end

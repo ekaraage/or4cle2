@@ -3,7 +3,7 @@
 class RankingsController < ApplicationController
   before_action :set_ranking, only: %i[edit update destroy]
   before_action :authenticate_user!, except: [:index]
-  before_action :check_user_ownership, only: %i[edit update destroy]
+  before_action :check_ranking_ownership, only: %i[edit update destroy]
   def index
     @rankings = Ranking.all
   end
@@ -50,7 +50,7 @@ class RankingsController < ApplicationController
     @ranking = current_user.rankings.find(params[:id])
   end
 
-  def check_user_ownership
+  def check_ranking_ownership
     return if @ranking.made_by?(current_user)
 
     flash[:alert] = 'このランキングを編集する権限がありません。'

@@ -7,7 +7,7 @@ class SubmissionsController < ApplicationController
   before_action :set_song
   before_action :set_submission, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[index show]
-  before_action :check_user_ownership, only: %i[edit update destroy]
+  before_action :check_submission_ownership, only: %i[edit update destroy]
   before_action :check_submittable, only: %i[new create]
 
   def index
@@ -81,7 +81,7 @@ class SubmissionsController < ApplicationController
     @submission = @song.submissions.find(params[:id])
   end
 
-  def check_user_ownership
+  def check_submission_ownership
     return if current_user&.can_edit_submission?(@submission)
 
     flash[:alert] = 'この提出を編集する権限がありません。'

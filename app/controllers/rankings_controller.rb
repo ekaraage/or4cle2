@@ -51,9 +51,9 @@ class RankingsController < ApplicationController
   end
 
   def check_user_ownership
-    if !@ranking.made_by?(current_user)
-      flash[:alert] = 'このランキングを編集する権限がありません。'
-      redirect_to rankings_path
-    end
+    return if @ranking.made_by?(current_user)
+
+    flash[:alert] = 'このランキングを編集する権限がありません。'
+    redirect_to rankings_path
   end
 end

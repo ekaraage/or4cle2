@@ -57,9 +57,9 @@ class SongsController < ApplicationController
   end
 
   def check_user_ownership
-    if !current_user&.can_edit_song?(@ranking)
-      flash[:alert] = 'このランキングを編集する権限がありません。'
-      redirect_to ranking_songs_path(@ranking)
-    end
+    return if current_user&.can_edit_song?(@ranking)
+
+    flash[:alert] = 'このランキングを編集する権限がありません。'
+    redirect_to ranking_songs_path(@ranking)
   end
 end

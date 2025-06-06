@@ -24,11 +24,15 @@ class User < ApplicationRecord
     false
   end
 
-  def can_edit_ranking_or_song?(model)
-    model.active? && model.made_by?(self)
+  def can_edit_song?(ranking)
+    ranking.active? && ranking.made_by?(self)
   end
 
   def can_submit_score?(song)
     song.active? && song.submissions.find_by(user: self).nil?
+  end
+
+  def can_edit_submission?(submission)
+    submission.song.active? && submission.submitted_by?(self)
   end
 end

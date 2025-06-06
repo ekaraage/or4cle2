@@ -3,6 +3,8 @@
 class SongsController < ApplicationController
   before_action :set_ranking
   before_action :set_song, only: %i[edit update destroy]
+  before_action :authenticate_user!, except: [:index]
+  before_action :check_user_ownership, except: %i[index]
 
   def index
     @songs = @ranking.songs
@@ -52,5 +54,12 @@ class SongsController < ApplicationController
 
   def set_ranking
     @ranking = Ranking.find(params[:ranking_id])
+  end
+
+  def check_user_ownership
+    if !current_user&.can_edit_song?(@ranking)
+      flash[:alert] = 'このランキングを編集する権限がありません。'
+      redirect_to ranking_songs_path(@ranking)
+    end
   end
 end

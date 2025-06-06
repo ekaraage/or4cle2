@@ -6,6 +6,9 @@ class SubmissionsController < ApplicationController
   before_action :set_ranking
   before_action :set_song
   before_action :set_submission, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :check_user_ownership, only: %i[edit update destroy]
+  before_action :check_submittable, only: %i[new create]
 
   def index
     @submissions = @song.submissions.order(:score)
@@ -76,5 +79,19 @@ class SubmissionsController < ApplicationController
 
   def set_submission
     @submission = @song.submissions.find(params[:id])
+  end
+
+  def check_user_ownership
+    if !current_user&.can_edit_submission?(@submission)
+      flash[:alert] = 'この提出を編集する権限がありません。'
+      redirect_to ranking_song_submissions_path(@ranking, @song)
+    end
+  end
+
+  def check_submittable
+    if !current_user&.can_submit_score?(@song)
+      flash[:alert] = 'この曲への新たな提出はできません。編集機能を使用してください。'
+      redirect_to ranking_song_submissions_path(@ranking, @song)
+    end
   end
 end

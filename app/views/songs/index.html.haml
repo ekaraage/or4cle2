@@ -19,7 +19,7 @@
   %h4.text-center
     #{@ranking.title} は終了しました。
 
-- can_add_song = current_user&.can_edit_ranking_or_song?(@ranking)
+- can_add_song = current_user&.can_edit_song?(@ranking)
 
 .dgrid.gap-2.col-9.mx-auto
   %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_path(@ranking)}'", class: ('disabled' if !can_add_song) }

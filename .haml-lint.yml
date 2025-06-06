@@ -1,0 +1,9 @@
+linters:
+  # 長いと見にくいのはわかるが改行された方がより読みにくいし個人的に直しにくいなあと思った
+  LineLength:
+    enabled: false
+
+  RuboCop:
+    ignored_cops:
+      # unless の認知負荷が自分にとって高すぎる 普通に If not の方が読みやすい
+      - Style/NegatedIf

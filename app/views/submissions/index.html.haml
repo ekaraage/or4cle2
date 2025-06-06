@@ -20,7 +20,7 @@
     #{@ranking.title} は終了しました。
 
 .dgrid.gap-2.col-9.mx-auto
-  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'", class: ('disabled' if !can_newly_submit) }
+  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'", class: ('disabled' if !can_submit) }
     + 新しい提出を追加する
 
 .container

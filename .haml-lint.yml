@@ -1,0 +1,6 @@
+linters:
+  LineLength:
+    enabled: false
+  RuboCop:
+    ignored_cops:
+      - Style/NegatedIf

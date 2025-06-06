@@ -24,7 +24,7 @@ class User < ApplicationRecord
     false
   end
 
-  def can_edit_song?(ranking)
+  def can_edit_song_for_ranking?(ranking)
     ranking.active? && ranking.made_by?(self)
   end
 

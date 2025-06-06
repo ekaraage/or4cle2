@@ -57,7 +57,7 @@ class SongsController < ApplicationController
   end
 
   def check_song_ownership
-    return if current_user&.can_edit_song?(@ranking)
+    return if current_user&.can_edit_song_for_ranking?(@ranking)
 
     flash[:alert] = 'このランキングを編集する権限がありません。'
     redirect_to ranking_songs_path(@ranking)

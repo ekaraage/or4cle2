@@ -3,7 +3,7 @@
 class SongsController < ApplicationController
   before_action :set_ranking
   before_action :set_song, only: %i[edit update destroy]
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: %i[index]
   before_action :check_song_ownership, except: %i[index]
 
   def index

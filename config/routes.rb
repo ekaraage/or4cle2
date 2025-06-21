@@ -18,7 +18,10 @@ Rails.application.routes.draw do
   resources :rankings, except: [:show] do
     # get '/songs/:id', to: redirect('rankings/%{ranking_id}/songs/%{id}/submissions')
     resources :songs, except: [:show] do
-      resources :submissions
+      get 'export_csv', on: :collection
+      resources :submissions do
+        get 'export_csv', on: :collection
+      end
     end
   end
   root 'home#index'

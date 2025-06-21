@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 class SongsController < ApplicationController
+  require 'zip'
+  include CsvGenerator
+  include CheckCsvDownloadable
+
   before_action :set_ranking
   before_action :set_song, only: %i[edit update destroy]
   before_action :authenticate_user!, except: %i[index]
-  before_action :check_song_ownership, except: %i[index]
+  before_action :check_song_ownership, except: %i[index export_csv]
 
   def index
     @songs = @ranking.songs
@@ -40,6 +44,18 @@ class SongsController < ApplicationController
     @song.destroy
     flash[:success] = "曲: #{song_title} は正常に削除されました。"
     redirect_to ranking_songs_path
+  end
+
+  def export_csv
+    # Create a zip file
+    zip_buffer = Zip::OutputStream.write_buffer do |zip|
+      @ranking.songs.each do |song|
+        zip.put_next_entry("submissions_ranking_#{@ranking.id}_song_#{song.id}.csv")
+        zip.write(generate_csv(song.submissions))
+      end
+    end
+
+    send_data zip_buffer.string, filename: "all_submissions_rankings-#{@ranking.id}.zip", type: 'application/zip'
   end
 
   private

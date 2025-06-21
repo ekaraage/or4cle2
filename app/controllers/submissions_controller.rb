@@ -2,6 +2,8 @@
 
 class SubmissionsController < ApplicationController
   require 'image_processing/vips'
+  include CsvGenerator
+  include CheckCsvDownloadable
 
   before_action :set_ranking
   before_action :set_song
@@ -45,6 +47,16 @@ class SubmissionsController < ApplicationController
     @submission.destroy
     flash[:success] = "曲: #{@song.title} への提出は正常に削除されました。"
     redirect_to ranking_song_submissions_path(@ranking, @song)
+  end
+
+  def export_csv
+    @submissions = @song.submissions
+    respond_to do |format|
+      format.csv do
+        send_data generate_csv(@submissions), filename: "submissions_ranking_#{@ranking.id}_song_#{@song.id}.csv",
+                                              type: 'text/csv;', disposition: 'attachment'
+      end
+    end
   end
 
   private

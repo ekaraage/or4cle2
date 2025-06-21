@@ -14,14 +14,19 @@
   %h4= @song.title
 
 - can_submit = current_user&.can_submit_score?(@song)
+- can_download_csv = @ranking.made_by?(current_user)
 
 - if !@ranking.active?
   %h4.text-center
     #{@ranking.title} は終了しました。
 
-.dgrid.gap-2.col-9.mx-auto
+.d-grid.gap-2.col-9.mx-auto
   %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{new_ranking_song_submission_path(@ranking, @song)}'", class: ('disabled' if !can_submit) }
     + 新しい提出を追加する
+
+.d-grid.justify-content-md-end.col-9.mx-auto.my-2
+  %button.btn.btn-primary.my-2{ type: 'button', onclick: "location.href='#{export_csv_ranking_song_submissions_path(@ranking, @song, format: :csv)}'", class: ('disabled' if !can_download_csv) }
+    データをcsvに書き出す
 
 .container
   .table-responsive

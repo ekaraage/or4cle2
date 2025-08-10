@@ -23,10 +23,10 @@
 - can_download_csv = @ranking.made_by?(current_user)
 
 .dgrid.gap-2.col-9.mx-auto
-  %button.btn.btn-primary.my-2= link_to '+ 新しい曲を追加する', new_ranking_song_path(@ranking), class: ('disabled' if !can_add_song)
+  = link_to '+ 新しい曲を追加する', new_ranking_song_path(@ranking), class: "btn btn-primary my-2#{' disabled' if !can_add_song}"
 
 .d-grid.justify-content-md-end.col-9.mx-auto.my-2
-  %button.btn.btn-primary.my-2= link_to 'データを一括でcsvに書き出す', export_csv_ranking_songs_path(@ranking, format: :zip), class: ('disabled' if !can_download_csv)
+  = link_to 'データを一括でcsvに書き出す', export_csv_ranking_songs_path(@ranking, format: :zip), class: "btn btn-primary my-2#{' disabled' if !can_download_csv}"
 
 .container
   .table-responsive

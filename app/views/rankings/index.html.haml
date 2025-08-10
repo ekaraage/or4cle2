@@ -1,5 +1,5 @@
 .dgrid.gap-2.col-9.mx-auto
-  %button.btn.btn-primary.my-2= link_to '+ 新しいIRを作成する', new_ranking_path, class: ('disabled' if !user_signed_in?)
+  = link_to '+ 新しいIRを作成する', new_ranking_path, class: "btn btn-primary my-2#{' disabled' unless user_signed_in?}"
 
 .container
   .table-responsive

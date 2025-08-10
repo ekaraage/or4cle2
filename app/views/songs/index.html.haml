@@ -22,7 +22,7 @@
 - can_add_song = current_user&.can_edit_song_for_ranking?(@ranking)
 - can_download_csv = @ranking.made_by?(current_user)
 
-.dgrid.gap-2.col-9.mx-auto
+.d-grid.gap-2.col-9.mx-auto
   = link_to '+ 新しい曲を追加する', new_ranking_song_path(@ranking), class: "btn btn-primary my-2#{' disabled' if !can_add_song}"
 
 .d-grid.justify-content-md-end.col-9.mx-auto.my-2

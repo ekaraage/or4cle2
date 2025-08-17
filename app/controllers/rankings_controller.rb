@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class RankingsController < ApplicationController
-  before_action :set_ranking, only: %i[edit update destroy]
   before_action :authenticate_user!, except: [:index]
-  before_action :check_ranking_ownership, only: %i[edit update destroy]
   def index
     @rankings = Ranking.all
   end
@@ -22,9 +20,15 @@ class RankingsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @ranking = current_user.rankings.find(params[:id])
+    check_ranking_ownership(@ranking)
+  end
 
   def update
+    @ranking = current_user.rankings.find(params[:id])
+    check_ranking_ownership(@ranking)
+
     if @ranking.update(ranking_params)
       flash[:success] = "ランキング: #{@ranking.title} は正常に更新されました。"
       redirect_to rankings_path
@@ -34,9 +38,11 @@ class RankingsController < ApplicationController
   end
 
   def destroy
-    ranking_title = @ranking.title
-    @ranking.destroy
-    flash[:success] = "ランキング: #{ranking_title} は正常に削除されました。"
+    ranking = current_user.rankings.find(params[:id])
+    check_ranking_ownership(ranking)
+
+    ranking.destroy
+    flash[:success] = "ランキング: #{ranking.title} は正常に削除されました。"
     redirect_to rankings_path
   end
 
@@ -46,14 +52,10 @@ class RankingsController < ApplicationController
     params.require(:ranking).permit(:title, :detail, :start_date, :end_date)
   end
 
-  def set_ranking
-    @ranking = current_user.rankings.find(params[:id])
-  end
+  def check_ranking_ownership(ranking)
+    return if ranking.made_by?(current_user)
 
-  def check_ranking_ownership
-    return if @ranking.made_by?(current_user)
-
-    flash[:alert] = 'このランキングを編集する権限がありません。'
+    flash[:alert] = 'このランキングを編集できませんでした。あなたはランキングの作成者ではありません。'
     redirect_to rankings_path
   end
 end

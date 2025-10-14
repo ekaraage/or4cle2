@@ -5,21 +5,24 @@ class SongsController < ApplicationController
   include CsvGenerator
   include CheckCsvDownloadable
 
-  before_action :set_ranking
-  before_action :set_song, only: %i[edit update destroy]
   before_action :authenticate_user!, except: %i[index]
-  before_action :check_song_ownership, except: %i[index export_csv]
 
   def index
+    @ranking = Ranking.find(params[:ranking_id])
     @songs = @ranking.songs
   end
 
   def new
+    @ranking = Ranking.find(params[:ranking_id])
     @song = @ranking.songs.build
+    check_song_ownership(@song)
   end
 
   def create
+    @ranking = Ranking.find(params[:ranking_id])
     @song = @ranking.songs.new(song_params)
+    check_song_ownership(@song)
+
     if @song.save
       flash[:success] = "曲: #{@song.title} は正常に追加されました。"
       redirect_to ranking_songs_path(@ranking)
@@ -28,9 +31,17 @@ class SongsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @ranking = Ranking.find(params[:ranking_id])
+    @song = @ranking.songs.find(params[:id])
+    check_song_ownership(@song)
+  end
 
   def update
+    @ranking = Ranking.find(params[:ranking_id])
+    @song = @ranking.songs.find(params[:id])
+    check_song_ownership(@song)
+
     if @song.update(song_params)
       flash[:success] = "曲: #{@song.title} は正常に更新されました。"
       redirect_to ranking_songs_path(@ranking)
@@ -40,13 +51,17 @@ class SongsController < ApplicationController
   end
 
   def destroy
-    song_title = @song.title
-    @song.destroy
-    flash[:success] = "曲: #{song_title} は正常に削除されました。"
-    redirect_to ranking_songs_path
+    @ranking = Ranking.find(params[:ranking_id])
+    song = ranking.songs.find(params[:id])
+    check_song_ownership(song)
+
+    song.destroy
+    flash[:success] = "曲: #{song.title} は正常に削除されました。"
+    redirect_to ranking_songs_path(@ranking)
   end
 
   def export_csv
+    @ranking = Ranking.find(params[:ranking_id])
     # Create a zip file
     zip_buffer = Zip::OutputStream.write_buffer do |zip|
       @ranking.songs.each do |song|
@@ -64,18 +79,11 @@ class SongsController < ApplicationController
     params.require(:song).permit(:title, :model)
   end
 
-  def set_song
-    @song = @ranking.songs.find(params[:id])
-  end
+  # 今はランキングを作った人しか選曲の編集をできないようにしている
+  def check_song_ownership(song)
+    return if current_user&.can_edit_song_for_ranking?(song.ranking)
 
-  def set_ranking
-    @ranking = Ranking.find(params[:ranking_id])
-  end
-
-  def check_song_ownership
-    return if current_user&.can_edit_song_for_ranking?(@ranking)
-
-    flash[:alert] = 'このランキングを編集する権限がありません。'
-    redirect_to ranking_songs_path(@ranking)
+    flash[:alert] = 'この選曲を編集できませんでした。あなたがランキングの作成者でないか、ランキングが開催期間外です。'
+    redirect_to ranking_songs_path(song.ranking)
   end
 end

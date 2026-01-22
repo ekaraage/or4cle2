@@ -78,4 +78,4 @@ gem "rspec-rails", "~> 8.0"
 
 gem "csv", "~> 3.3"
 
-gem "rubyzip", "~> 2.4"
+gem "rubyzip", "~> 3.2"

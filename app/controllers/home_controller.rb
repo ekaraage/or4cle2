@@ -3,5 +3,5 @@
 class HomeController < ApplicationController
   def index; end
   def faqs; end
-  def relase_notes; end
+  def release_notes; end
 end

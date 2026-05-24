@@ -32,7 +32,7 @@ class SubmissionsController < ApplicationController
     @song = @ranking.songs.find(params[:song_id])
     @submission = @song.submissions.new(submission_params)
 
-    check_submittable(@song)
+    return if check_submittable(@song)
 
     if @submission.save
       flash[:success] = "曲: #{@song.title} への提出は正常に保存されました。"
@@ -78,6 +78,8 @@ class SubmissionsController < ApplicationController
   end
 
   def export_csv
+    @ranking = Ranking.find(params[:ranking_id])
+    @song = @ranking.songs.find(params[:song_id])
     @submissions = @song.submissions
     respond_to do |format|
       format.csv do

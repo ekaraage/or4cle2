@@ -52,7 +52,7 @@ class SongsController < ApplicationController
 
   def destroy
     @ranking = Ranking.find(params[:ranking_id])
-    song = ranking.songs.find(params[:id])
+    song = @ranking.songs.find(params[:id])
     check_song_ownership(song)
 
     song.destroy
